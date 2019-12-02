@@ -1,10 +1,10 @@
 package com.ocr.florian;
 
+import java.util.Scanner;
 
-import java.util.Arrays;
-
-public class Player {
-
+public class PlayersMethods {
+    public static final int maxTries = 5;
+    public static Scanner sc = new Scanner(System.in);
 //Création tableau de combinaison aléatoire.
 
     public void combinationChartMaker(int figures) {
@@ -33,4 +33,5 @@ public class Player {
         this.combinationChartMaker(4 );
         System.out.println(")");
     }
-}
+
+    }
