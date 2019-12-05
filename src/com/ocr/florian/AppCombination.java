@@ -6,30 +6,28 @@ public class AppCombination {
 
 	private static Scanner sc = new Scanner(System.in);
 
-	private static int figures = 4;
-	private int maxTries = 5;
+//varible de configuration du jeu.
+
+	protected static int figures = 4;
 
 	public static void setFigures(int figures) {
 		AppCombination.figures = figures;
 	}
 
-	public void setMaxTries(int maxTries) {
-		this.maxTries = maxTries;
-	}
+//main.
 
 	public static void main(String[] args) {
+        int[] combination = new int[figures];
+        int[] proposition = new int[figures];
+        Game player1 = new Game(combination, proposition);
+        Game player2 = new Game(combination, proposition);
+	    Menu(selectMode(),player1,player2);
+        System.out.println("player2 à gagné");
 
-		int[] combination = new int[figures];
-		int[] proposition = new int[figures];
-
-    	Game player1 = new Game(combination, proposition);
-		Game player2 = new Game(combination, proposition);
-
-		Menu(selectMode());
-		player1.combination(1,9);
-		player2.proposition(true,1,9);
-		player1.compare(player2);
     }
+
+//Sélection du mode à partir du menu.
+
 	public static int selectMode() {
 
     	int selectedMode = Game.askForIntValue("\t\tEscape Game ONLINE\r\n\n\t" +
@@ -44,29 +42,29 @@ public class AppCombination {
 	}
 
 
-    public static void Menu(int selectedMode) {
+    public static void Menu(int selectedMode, Game player1, Game player2) {
 
 		switch (selectedMode) {
 
 			case 1:
 				System.out.println("Mode sélectionné : Challenger");
 				System.out.println("Trouvez la combinaison à "+ figures +" chiffres");
-				//ChallengerMode.challenger();
+                player1.challenger(player2,player1);
 				break;
 			case 2:
 				System.out.println("Mode sélectionné : Defenseur");
 				System.out.println("Définissez une combinaison de " + figures + " chiffres aléatoirement");
-				//DefenderMode.defender();
+                player1.defender(player2,player1);
 				break;
 			case 3:
 				System.out.println("Mode sélectionné : Duel");
 				System.out.println("Défiez l'ordinateur");
-				//DuelMode.duel();
 				break;
 			case 4:
 				System.out.println("Vous quittez le jeu");
 				break;
 		}
-	}
+
+    }
 
 }
