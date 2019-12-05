@@ -111,6 +111,7 @@ public class Game {
             System.out.println(Arrays.toString(compareResult) );
             return compareResult;
     }
+
 //Ajustement des valeurs min et max pour la proposition d'un nouveau code.
 
     public void minMaxValue(Game player1,int i,int cmpt){
