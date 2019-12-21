@@ -2,6 +2,7 @@ package com.ocr.florian;
 
 import java.util.Arrays;
 
+
 public class DuelMode extends Game {
     private boolean isHuman;
 
@@ -9,6 +10,47 @@ public class DuelMode extends Game {
         super(combination, proposition);
     }
 
+    //mode duel.
+
+    public static void duel() throws InterruptedException {
+
+        Game player1 = new DuelMode(combinationP1, propositionP1);
+        Game player2 = new DuelMode(combinationP2, propositionP2);
+
+        player1.combination(1, 9);
+        player2.combination(1, 9);
+
+        for (int i = 0; i < Game.maxTries; i++) {
+
+            System.out.println("Proposition du joueur 1");
+
+            player1.proposition(true, combinationP2);
+            player1.compare(player2.getCombination());
+
+            if (Arrays.equals(player2.getCombination(), player1.getProposition())) {
+                System.out.println("player1 à gagné !");
+                return;
+            }
+
+            Thread.sleep(1000);
+
+            System.out.println("Proposition du joueur 2");
+
+            Thread.sleep(1000);
+
+            player2.proposition(false, combinationP1);
+            player2.compare(player1.getCombination());
+
+            Thread.sleep(1000);
+
+            if (Arrays.equals(player1.getCombination(), player2.getProposition())) {
+                System.out.println("player2 à gagné !");
+                return;
+            }
+
+        }
+
+    }
 
     @Override
     public int[] combination(int min, int max) {
