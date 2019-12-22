@@ -11,14 +11,14 @@ public class ChallengerMode extends Game {
 
     public static void challenger() {
 
-        Game player1 = new ChallengerMode(combinationP1, propositionP1);
-        Game player2 = new ChallengerMode(combinationP2, propositionP2);
+        Game player1 = new ChallengerMode(getCombinationP1(), getPropositionP1());
+        Game player2 = new ChallengerMode(getCombinationP2(), getPropositionP2());
 
         player1.combination(1, 9);
 
         for (int i = 0; i < Game.getMaxTries(); i++) {
 
-            player2.proposition(true, combinationP1, propositionP2);
+            player2.proposition(true, getCombinationP1(), getPropositionP2());
 
             player2.compare(player1.getCombination());
 

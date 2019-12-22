@@ -11,14 +11,14 @@ public class DefenserMode extends Game {
 
     public static void defenser() {
 
-        Game player1 = new DefenserMode(combinationP1, propositionP1);
-        Game player2 = new DefenserMode(combinationP2, propositionP2);
+        Game player1 = new DefenserMode(getCombinationP1(), getPropositionP1());
+        Game player2 = new DefenserMode(getCombinationP2(), getPropositionP2());
 
         player1.combination(1, 9);
 
         for (int i = 0; i < Game.getMaxTries(); i++) {
 
-            player2.proposition(false, combinationP1, propositionP2);
+            player2.proposition(false, getCombinationP1(), getPropositionP2());
 
             player2.compare(player1.getCombination());
 

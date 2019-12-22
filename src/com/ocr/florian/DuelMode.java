@@ -14,8 +14,8 @@ public class DuelMode extends Game {
 
     public static void duel() throws InterruptedException {
 
-        Game player1 = new DuelMode(combinationP1, propositionP1);
-        Game player2 = new DuelMode(combinationP2, propositionP2);
+        Game player1 = new DuelMode(getCombinationP1(), getPropositionP1());
+        Game player2 = new DuelMode(getCombinationP2(), getPropositionP2());
 
         player1.combination(1, 9);
         player2.combination(1, 9);
@@ -24,7 +24,7 @@ public class DuelMode extends Game {
 
             System.out.println("Proposition du joueur 1");
 
-            player1.proposition(true, combinationP2, propositionP1);
+            player1.proposition(true, getCombinationP2(), getPropositionP1());
             player1.compare(player2.getCombination());
 
             if (Arrays.equals(player2.getCombination(), player1.getProposition())) {
@@ -38,7 +38,7 @@ public class DuelMode extends Game {
 
             Thread.sleep(1000);
 
-            player2.proposition(false, combinationP1, propositionP2);
+            player2.proposition(false, getCombinationP1(), getPropositionP2());
             player2.compare(player1.getCombination());
 
             Thread.sleep(1000);

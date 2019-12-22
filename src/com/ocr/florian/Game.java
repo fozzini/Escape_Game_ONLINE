@@ -26,10 +26,10 @@ public abstract class Game {
 
     //variable de class
 
-    static byte[] combinationP1 = new byte[combinationLength];
-    static byte[] propositionP1 = new byte[combinationLength];
-    static byte[] combinationP2 = new byte[combinationLength];
-    static byte[] propositionP2 = new byte[combinationLength];
+    private static byte[] combinationP1 = new byte[combinationLength];
+    private static byte[] propositionP1 = new byte[combinationLength];
+    private static byte[] combinationP2 = new byte[combinationLength];
+    private static byte[] propositionP2 = new byte[combinationLength];
 
     //getters
 
@@ -53,6 +53,21 @@ public abstract class Game {
         return displaySolution;
     }
 
+    public static byte[] getCombinationP1() {
+        return combinationP1;
+    }
+
+    public static byte[] getPropositionP1() {
+        return propositionP1;
+    }
+
+    public static byte[] getCombinationP2() {
+        return combinationP2;
+    }
+
+    public static byte[] getPropositionP2() {
+        return propositionP2;
+    }
     //tableau pour la combinaison
 
     abstract public byte[] combination(int min, int max);
