@@ -3,7 +3,7 @@ package com.ocr.florian;
 import java.util.Arrays;
 
 public class DefenserMode extends Game {
-    public DefenserMode(int[] combination, int[] proposition) {
+    public DefenserMode(byte[] combination, byte[] proposition) {
         super(combination, proposition);
     }
 
@@ -16,9 +16,9 @@ public class DefenserMode extends Game {
 
         player1.combination(1, 9);
 
-        for (int i = 0; i < Game.maxTries; i++) {
+        for (int i = 0; i < Game.getMaxTries(); i++) {
 
-            player2.proposition(false, combinationP1);
+            player2.proposition(false, combinationP1, propositionP2);
 
             player2.compare(player1.getCombination());
 
@@ -31,12 +31,12 @@ public class DefenserMode extends Game {
     }
 
     @Override
-    public int[] combination(int min, int max) {
+    public byte[] combination(int min, int max) {
 
         for (int i = 0; i < getCombination().length; i++) {
             getCombination()[i] = randomNumber(min, max);
         }
-        if (displaySolution) {
+        if (isDisplaySolution()) {
             System.out.println(Arrays.toString(getCombination()));
         }
         return getCombination();
@@ -45,14 +45,14 @@ public class DefenserMode extends Game {
 
     @Override
 
-    public int[] proposition(boolean isHuman, int[] combination) {
+    public byte[] proposition(boolean isHuman, byte[] combination,byte[] proposition) {
 
         int cmpt = 0;
         cmpt++;
 
         for (int i = 0; i < getProposition().length; i++) {
-            minMaxValue(i, cmpt, combination);
-            getProposition()[i] = randomNumber(min, max);
+            Utils.minMaxValue(i, cmpt, combination, proposition);
+            getProposition()[i] = randomNumber(Utils.min, Utils.max);
         }
 
         System.out.println(Arrays.toString(getProposition()));

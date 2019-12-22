@@ -3,7 +3,7 @@ package com.ocr.florian;
 import java.util.Arrays;
 
 public class ChallengerMode extends Game {
-    public ChallengerMode(int[] combination, int[] proposition) {
+    public ChallengerMode(byte[] combination, byte[] proposition) {
         super(combination, proposition);
     }
 
@@ -16,9 +16,9 @@ public class ChallengerMode extends Game {
 
         player1.combination(1, 9);
 
-        for (int i = 0; i < Game.maxTries; i++) {
+        for (int i = 0; i < Game.getMaxTries(); i++) {
 
-            player2.proposition(true, combinationP1);
+            player2.proposition(true, combinationP1, propositionP2);
 
             player2.compare(player1.getCombination());
 
@@ -30,12 +30,12 @@ public class ChallengerMode extends Game {
     }
 
     @Override
-    public int[] combination(int min, int max) {
+    public byte[] combination(int min, int max) {
 
         for (int i = 0; i < getCombination().length; i++) {
             getCombination()[i] = randomNumber(min, max);
         }
-        if (displaySolution) {
+        if (isDisplaySolution()) {
             System.out.println(Arrays.toString(getCombination()));
         }
         return getCombination();
@@ -43,14 +43,16 @@ public class ChallengerMode extends Game {
 
 
     @Override
-    public int[] proposition(boolean isHuman, int[] combination) {
+    public byte[] proposition(boolean isHuman, byte[] combination, byte[] proposition) {
 
         int cmpt = 0;
         cmpt++;
 
+        System.out.println("Veuillez saisir votre proposition à " + getCombinationLength() + " chiffres");
+
         for (int i = 0; i < getProposition().length; i++) {
 
-            getProposition()[i] = askForIntValue("Veuillez saisir le chiffre n°" + (i + 1), min, max);
+            getProposition()[i] = Utils.askForIntValue("", 1, 9);
 
         }
         System.out.println(Arrays.toString(getProposition()));

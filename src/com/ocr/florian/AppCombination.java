@@ -19,7 +19,7 @@ public class AppCombination {
 
 	public static int menu() {
 
-		int menu = Game.askForIntValue("\t\tEscape Game ONLINE\r\n\n\t" +
+		int menu = Utils.askForIntValue("\t\tEscape Game ONLINE\r\n\n\t" +
 				"Choisissez le mode de jeu :\r\n\n\t\t" +
 				"1- Challenger\r\n\t\t" +
 				"2- Défenseur\r\n\t\t" +

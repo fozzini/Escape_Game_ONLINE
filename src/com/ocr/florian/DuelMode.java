@@ -2,11 +2,11 @@ package com.ocr.florian;
 
 import java.util.Arrays;
 
-
 public class DuelMode extends Game {
+
     private boolean isHuman;
 
-    public DuelMode(int[] combination, int[] proposition) {
+    public DuelMode(byte[] combination, byte[] proposition) {
         super(combination, proposition);
     }
 
@@ -20,11 +20,11 @@ public class DuelMode extends Game {
         player1.combination(1, 9);
         player2.combination(1, 9);
 
-        for (int i = 0; i < Game.maxTries; i++) {
+        for (int i = 0; i < Game.getMaxTries(); i++) {
 
             System.out.println("Proposition du joueur 1");
 
-            player1.proposition(true, combinationP2);
+            player1.proposition(true, combinationP2, propositionP1);
             player1.compare(player2.getCombination());
 
             if (Arrays.equals(player2.getCombination(), player1.getProposition())) {
@@ -38,7 +38,7 @@ public class DuelMode extends Game {
 
             Thread.sleep(1000);
 
-            player2.proposition(false, combinationP1);
+            player2.proposition(false, combinationP1, propositionP2);
             player2.compare(player1.getCombination());
 
             Thread.sleep(1000);
@@ -53,12 +53,12 @@ public class DuelMode extends Game {
     }
 
     @Override
-    public int[] combination(int min, int max) {
+    public byte[] combination(int min, int max) {
 
         for (int i = 0; i < getCombination().length; i++) {
             getCombination()[i] = randomNumber(min, max);
         }
-        if (displaySolution) {
+        if (isDisplaySolution()) {
             System.out.println(Arrays.toString(getCombination()));
         }
         return this.getCombination();
@@ -66,19 +66,22 @@ public class DuelMode extends Game {
 
 
     @Override
-    public int[] proposition(boolean isHuman, int[] combination) {
+    public byte[] proposition(boolean isHuman, byte[] combination, byte[] proposition) {
 
         int cmpt = 0;
         cmpt++;
 
+        System.out.println("Veuillez saisir votre proposition à " + getCombinationLength() + " chiffres");
+
         for (int i = 0; i < getProposition().length; i++) {
             if (isHuman) {
-                this.minMaxValue(i, cmpt, combination);
-                getProposition()[i] = askForIntValue("Veuillez saisir le chiffre n°" + (i + 1), min, max);
+
+                getProposition()[i] = Utils.askForIntValue("", 1, 9);
 
             } else {
-                this.minMaxValue(i, cmpt, combination);
-                getProposition()[i] = randomNumber(min, max);
+
+                Utils.minMaxValue(i, cmpt, combination, proposition);
+                getProposition()[i] = randomNumber(Utils.min, Utils.max);
             }
         }
         System.out.println(Arrays.toString(getProposition()));
