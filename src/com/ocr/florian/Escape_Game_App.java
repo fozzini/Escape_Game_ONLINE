@@ -33,26 +33,16 @@ public class AppCombination {
 
 	public static void selectMode(int menu) throws InterruptedException {
 
-
 		switch (menu) {
 
 			case 1:
-				System.out.println("Mode sélectionné : Challenger");
-				System.out.println("Trouvez la combinaison à " + Game.getCombinationLength() + " chiffres");
-
-				ChallengerMode.challenger();
+				ChallengerMode.start();
 				break;
 			case 2:
-				System.out.println("Mode sélectionné : Defenseur");
-				System.out.println("Définissez une combinaison de " + Game.getCombinationLength() + " chiffres aléatoirement");
-
-				DefenserMode.defenser();
+				DefenserMode.start();
 				break;
 			case 3:
-				System.out.println("Mode sélectionné : Duel");
-				System.out.println("Défiez l'ordinateur");
-
-				DuelMode.duel();
+				DuelMode.start();
 				break;
 			case 4:
 				System.out.println("Vous quittez le jeu");

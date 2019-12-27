@@ -6,41 +6,18 @@ import java.util.Random;
 
 public abstract class Game {
 
-    //constructeur.
-
-    public Game(byte[] combination, byte[] proposition) {
-        this.combination = combination;
-        this.proposition = proposition;
-    }
-
-    //variables de configuration du jeu
-
+    // variables de configuration du jeu.
     private static int maxTries = 5;
-    private static boolean displaySolution = false;
+    private static boolean developerMode = false;
     private static int combinationLength = 4;
 
-    //variable d'instance
 
-    private byte[] combination ;
-    private byte[] proposition ;
-
-    //variable de class
-
+    // variable de class.
     private static byte[] combinationP1 = new byte[combinationLength];
-    private static byte[] propositionP1 = new byte[combinationLength];
     private static byte[] combinationP2 = new byte[combinationLength];
-    private static byte[] propositionP2 = new byte[combinationLength];
 
-    //getters
 
-    public byte[] getProposition() {
-        return proposition;
-    }
-
-    public byte[] getCombination() {
-        return combination;
-    }
-
+    // getters.
     public static int getCombinationLength() {
         return combinationLength;
     }
@@ -49,48 +26,54 @@ public abstract class Game {
         return maxTries;
     }
 
-    public static boolean isDisplaySolution() {
-        return displaySolution;
+    public static boolean isDeveloperMode() {
+        return developerMode;
     }
 
     public static byte[] getCombinationP1() {
         return combinationP1;
     }
 
-    public static byte[] getPropositionP1() {
-        return propositionP1;
-    }
-
     public static byte[] getCombinationP2() {
         return combinationP2;
     }
 
-    public static byte[] getPropositionP2() {
-        return propositionP2;
+    // tableau pour la combinaison.
+    public byte[] combination(int min, int max) {
+
+        for (int i = 0; i < getCombination().length; i++) {
+            getCombination()[i] = randomNumber(min, max);
+        }
+        if (isDeveloperMode()) {
+            System.out.println(Arrays.toString(getCombination()));
+        }
+        return this.getCombination();
+
+    // Création d'une proposition.
+    public int proposition(boolean isHuman);
+        if (isHuman){
+            int proposition = askForIntValue("Veuillez entrer votre proposition à "+ getCombinationLength() + " chiffres.", int minValue, int maxValue)
+        }
+        else if (isHuman = false){
+            for (int i = 0; i < getCombination().length; i++)
+                int proposition = randomNumber(1, 9)
+        }
+        return proposition;
     }
-    //tableau pour la combinaison
 
-    abstract public byte[] combination(int min, int max);
+    // Comparaison des tableaux.
+    public String compare(byte[] combination) {
 
-    //Création d'un tableau de propositions.
-
-    abstract public byte[] proposition(boolean isHuman, byte[] combination, byte[] proposition);
-
-    //Comparaison des tableaux.
-
-    public String[] compare(byte[] combination) {
-
-        String[] compareResult = new String[combination.length];
 
         for (int i = 0; i < combination.length; i++) {
 
-            if (this.proposition[i] < combination[i]) {
+            if (combination[i] > proposition) {
                 compareResult[i] = "+";
 
-            } else if (this.proposition[i] > combination[i]) {
+            } else if (combination[i] < proposition) {
                 compareResult[i] = "-";
 
-            } else if (this.proposition[i] == combination[i]) {
+            } else if (combination[i] == proposition) {
                 compareResult[i] = "=";
 
             }
@@ -99,8 +82,7 @@ public abstract class Game {
         return compareResult;
     }
 
-    //Chiffre aléatoire
-
+    // Chiffre aléatoire.
     public static byte randomNumber(int min, int max) {
 
         Random rand = new Random();
@@ -108,5 +90,4 @@ public abstract class Game {
 
         return randomNumber;
     }
-
 }

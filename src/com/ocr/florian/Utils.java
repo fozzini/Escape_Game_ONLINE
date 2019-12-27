@@ -10,8 +10,7 @@ public class Utils {
     protected static byte min;
     protected static byte max;
 
-    //gestion des exceptions min et max.
-
+    // gestion des exceptions min et max.
     public static byte askForIntValue(String question, int minValue, int maxValue) {
 
         System.out.println(question);
@@ -37,8 +36,7 @@ public class Utils {
         return value;
     }
 
-    //tableau pour borner les propositions valide suivant la comparaison.
-
+    // tableau pour borner les propositions valide suivant la comparaison.
     public static void minMaxValue(int i, int cmpt, byte[] combination, byte[] proposition) {
 
 

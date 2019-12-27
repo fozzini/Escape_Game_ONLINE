@@ -2,19 +2,21 @@ package com.ocr.florian;
 
 import java.util.Arrays;
 
-public class ChallengerMode extends Game {
+public class DefenderMode extends Game {
+    }
 
-    // mode challenger.
+    // mode defender.
     public static void start() {
 
-        System.out.println("Mode sélectionné : Challenger");
-        System.out.println("Trouvez la combinaison à " + Game.getCombinationLength() + " chiffres");
+        System.out.println("Mode sélectionné : Defenseur");
+        System.out.println("Définissez une combinaison de " + Game.getCombinationLength() + " chiffres aléatoirement");
 
-        combinationP1(1, 9);
+
+        player1.combination(1, 9);
 
         for (int i = 0; i < Game.getMaxTries(); i++) {
 
-            proposition(true);
+            player2.proposition(false, getCombinationP1(), getPropositionP2());
 
             player2.compare(player1.getCombination());
 
@@ -23,5 +25,6 @@ public class ChallengerMode extends Game {
             }
         }
         System.out.println("player2 à perdu");
+
     }
 }

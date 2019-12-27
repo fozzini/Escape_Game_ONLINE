@@ -6,16 +6,11 @@ public class DuelMode extends Game {
 
     private boolean isHuman;
 
-    public DuelMode(byte[] combination, byte[] proposition) {
-        super(combination, proposition);
-    }
+    // mode duel.
+    public static void start() throws InterruptedException {
 
-    //mode duel.
-
-    public static void duel() throws InterruptedException {
-
-        Game player1 = new DuelMode(getCombinationP1(), getPropositionP1());
-        Game player2 = new DuelMode(getCombinationP2(), getPropositionP2());
+        System.out.println("Mode sélectionné : Duel");
+        System.out.println("Défiez l'ordinateur");
 
         player1.combination(1, 9);
         player2.combination(1, 9);
@@ -47,45 +42,6 @@ public class DuelMode extends Game {
                 System.out.println("player2 à gagné !");
                 return;
             }
-
         }
-
-    }
-
-    @Override
-    public byte[] combination(int min, int max) {
-
-        for (int i = 0; i < getCombination().length; i++) {
-            getCombination()[i] = randomNumber(min, max);
-        }
-        if (isDisplaySolution()) {
-            System.out.println(Arrays.toString(getCombination()));
-        }
-        return this.getCombination();
-    }
-
-
-    @Override
-    public byte[] proposition(boolean isHuman, byte[] combination, byte[] proposition) {
-
-        int cmpt = 0;
-        cmpt++;
-
-        System.out.println("Veuillez saisir votre proposition à " + getCombinationLength() + " chiffres");
-
-        for (int i = 0; i < getProposition().length; i++) {
-            if (isHuman) {
-
-                getProposition()[i] = Utils.askForIntValue("", 1, 9);
-
-            } else {
-
-                Utils.minMaxValue(i, cmpt, combination, proposition);
-                getProposition()[i] = randomNumber(Utils.min, Utils.max);
-            }
-        }
-        System.out.println(Arrays.toString(getProposition()));
-
-        return this.getProposition();
     }
 }
