@@ -2,9 +2,11 @@ package com.ocr.florian;
 
 import java.util.Arrays;
 import java.util.Random;
-
+import java.util.Scanner;
 
 public abstract class Game {
+
+    private static Scanner sc = new Scanner(System.in);
 
     // variables de configuration du jeu.
     private static int maxTries = 5;
@@ -15,6 +17,7 @@ public abstract class Game {
     // variable de class.
     private static byte[] combinationP1 = new byte[combinationLength];
     private static byte[] combinationP2 = new byte[combinationLength];
+    private static int proposition;
 
 
     // getters.
@@ -38,48 +41,50 @@ public abstract class Game {
         return combinationP2;
     }
 
-    // tableau pour la combinaison.
-    public byte[] combination(int min, int max) {
+    //methode abstraite start.
 
-        for (int i = 0; i < getCombination().length; i++) {
-            getCombination()[i] = randomNumber(min, max);
+    static void start() {
+    }
+
+    // tableau pour la combinaison.
+    public static byte[] combination(byte[] combination, int min, int max) {
+
+        for (int i = 0; i < getCombinationLength(); i++) {
+            combination[i] = randomNumber(min, max);
         }
         if (isDeveloperMode()) {
-            System.out.println(Arrays.toString(getCombination()));
+            System.out.println(Arrays.toString(combination));
         }
-        return this.getCombination();
+        return combination;
+    }
 
     // Création d'une proposition.
-    public int proposition(boolean isHuman);
+    public int proposition(boolean isHuman){
+
         if (isHuman){
-            int proposition = askForIntValue("Veuillez entrer votre proposition à "+ getCombinationLength() + " chiffres.", int minValue, int maxValue)
+            Utils.askForIntValue("Veuillez entrer votre proposition à "+ getCombinationLength() + " chiffres.", int minValue, int maxValue)
+            proposition = sc.nextInt();
         }
         else if (isHuman = false){
-            for (int i = 0; i < getCombination().length; i++)
-                int proposition = randomNumber(1, 9)
+            proposition = randomNumber(getCombinationLength(), 9);
         }
         return proposition;
     }
 
-    // Comparaison des tableaux.
-    public String compare(byte[] combination) {
-
-
+    // Comparaison de la proposition avec la combinaison.
+    public void compare(byte[] combination) {
         for (int i = 0; i < combination.length; i++) {
 
             if (combination[i] > proposition) {
-                compareResult[i] = "+";
+               String compareResult = "+";
 
             } else if (combination[i] < proposition) {
-                compareResult[i] = "-";
+                String compareResult = "-";
 
             } else if (combination[i] == proposition) {
-                compareResult[i] = "=";
-
+                String compareResult = "=";
             }
         }
-        System.out.println(Arrays.toString(compareResult));
-        return compareResult;
     }
 
     // Chiffre aléatoire.

@@ -10,7 +10,7 @@ public class ChallengerMode extends Game {
         System.out.println("Mode sélectionné : Challenger");
         System.out.println("Trouvez la combinaison à " + Game.getCombinationLength() + " chiffres");
 
-        combinationP1(1, 9);
+        Game.combination(getCombinationP1(),1, 9);
 
         for (int i = 0; i < Game.getMaxTries(); i++) {
 

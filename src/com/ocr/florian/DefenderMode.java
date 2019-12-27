@@ -3,7 +3,7 @@ package com.ocr.florian;
 import java.util.Arrays;
 
 public class DefenderMode extends Game {
-    }
+
 
     // mode defender.
     public static void start() {

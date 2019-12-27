@@ -12,8 +12,8 @@ public class DuelMode extends Game {
         System.out.println("Mode sélectionné : Duel");
         System.out.println("Défiez l'ordinateur");
 
-        player1.combination(1, 9);
-        player2.combination(1, 9);
+        getCombinationP1(1, 9);
+        getCombinationP2(1, 9);
 
         for (int i = 0; i < Game.getMaxTries(); i++) {
 
