@@ -2,23 +2,20 @@ package com.ocr.florian;
 
 import java.util.Arrays;
 
-public class ChallengerMode extends Game {
+public class ChallengerMode extends AbstractGame {
 
     // mode challenger.
     public static void start() {
 
-        System.out.println("Mode sélectionné : Challenger");
-        System.out.println("Trouvez la combinaison à " + Game.getCombinationLength() + " chiffres");
+        System.out.println("Mode sélectionné : Challenger");;
 
-        Game.combination(getCombinationP1(),1, 9);
 
-        for (int i = 0; i < Game.getMaxTries(); i++) {
+        for (int i = 0; i < AbstractGame.getMaxTries(); i++) {
+            System.out.println("Veuillez entrer votre proposition à " + getCombinationLength() + " chiffres.");
+            System.out.print("Proposition : " + Arrays.toString(AbstractGame.proposition(true)));
+            System.out.print(" -> Réponse : "+ AbstractGame.compare(Escape_Game_App.getSecretComputer()));
 
-            proposition(true);
-
-            player2.compare(player1.getCombination());
-
-            if (Arrays.equals(player1.getCombination(), player2.getProposition())) {
+            if (Arrays.equals(Escape_Game_App.getSecretComputer(), AbstractGame.proposition(true))) {
                 return;
             }
         }

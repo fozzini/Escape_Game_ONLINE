@@ -6,7 +6,19 @@ public class Escape_Game_App {
 
 	private static Scanner sc = new Scanner(System.in);
 
+    private static byte[] secretComputer = new byte[AbstractGame.getCombinationLength()];
+    private static byte[] secretHuman = new byte[AbstractGame.getCombinationLength()];
+
+	public static byte[] getSecretComputer() {
+		return secretComputer;
+	}
+
+	public static byte[] getSecretHuman() {
+		return secretHuman;
+	}
+
 	public static void main(String[] args) throws InterruptedException {
+
 		selectMode(menu());
 	}
 
@@ -23,15 +35,20 @@ public class Escape_Game_App {
 
 
 	public static void selectMode(int menu) throws InterruptedException {
+
 		switch (menu) {
 
 			case 1:
+			    AbstractGame.combinationTableFiller(secretComputer,1,9);
 				ChallengerMode.start();
 				break;
 			case 2:
+                AbstractGame.combinationTableFiller(secretHuman,1,9);
 				DefenderMode.start();
 				break;
 			case 3:
+                AbstractGame.combinationTableFiller(secretComputer,1,9);
+                AbstractGame.combinationTableFiller(secretHuman,1,9);
 				DuelMode.start();
 				break;
 			case 4:
