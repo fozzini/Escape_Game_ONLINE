@@ -39,16 +39,16 @@ public class Escape_Game_App {
 		switch (menu) {
 
 			case 1:
-			    AbstractGame.combinationTableFiller(secretComputer,1,9);
+				ChallengerMode.combinationTableFiller(secretComputer,1,9);
 				ChallengerMode.start();
 				break;
 			case 2:
-                AbstractGame.combinationTableFiller(secretHuman,1,9);
+				DefenderMode.combinationTableFiller(secretHuman,1,9);
 				DefenderMode.start();
 				break;
 			case 3:
-                AbstractGame.combinationTableFiller(secretComputer,1,9);
-                AbstractGame.combinationTableFiller(secretHuman,1,9);
+				DuelMode.combinationTableFiller(secretComputer,1,9);
+				DuelMode.combinationTableFiller(secretHuman,1,9);
 				DuelMode.start();
 				break;
 			case 4:

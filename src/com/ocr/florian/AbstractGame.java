@@ -49,7 +49,7 @@ public abstract class AbstractGame{
 
         for (int i = 0; i < getCombinationLength(); i++) {
             if (isHuman) {
-                proposition[i] = Utils.askForIntValue("",1,9);
+                proposition[i] = sc.nextByte();
 
             } else {
                 proposition[i] = randomNumber(1, 9);
