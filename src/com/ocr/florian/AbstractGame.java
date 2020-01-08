@@ -1,87 +1,108 @@
 package com.ocr.florian;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 public abstract class AbstractGame{
 
     private static Scanner sc = new Scanner(System.in);
 
+    private byte[] secretComputer = new byte[getCombinationLength()];
+    private byte[] secretHuman = new byte[getCombinationLength()];
+    private byte[] proposition = new byte[getCombinationLength()];
 
-    // variable de class.
-    private static byte[] proposition;
+    // getters properties.
 
-
-    // getters.
     public static int getCombinationLength() {
-        int combinationLength = 4;
-        return combinationLength;
+        return 4;
     }
 
-    public static int getMaxTries() {
-        int maxTries = 5;
-        return maxTries;
+    public int getMaxTries() {
+        return 5;
     }
 
-    public static boolean isDeveloperMode() {
-        boolean developerMode = false;
-        return developerMode;
+    public boolean isDeveloperMode() {
+        boolean developerMode = true;
+        return true;
     }
 
-    // methode abstraite start.
-    static void start() {
+    // Getters and Setters.
+
+
+    public byte[] getSecretComputer() {
+        return secretComputer;
     }
 
-    // tableau pour la combinaison.
-    public static void combinationTableFiller(byte[] combination, int min, int max) {
+    public void setSecretComputer(byte[] secretComputer) {
+        this.secretComputer = secretComputer;
+    }
+
+    public byte[] getSecretHuman() {
+        return secretHuman;
+    }
+
+    public void setSecretHuman(byte[] secretHuman) {
+        this.secretHuman = secretHuman;
+    }
+
+    public byte[] getProposition() {
+        return proposition;
+    }
+
+
+    // Méthode abstraite start.
+    public void start() throws InterruptedException {
+    }
+
+    // Tableau pour la combinaison.
+    byte [] combinationArrayFiller(int min, int max) {
+
+       byte [] combination = new byte[getCombinationLength()];
 
         for (int i = 0; i < getCombinationLength(); i++) {
-            combination[i] = randomNumber(min, max);
+            combination[i] = Utils.randomNumber(min, max);
         }
         if (isDeveloperMode()) {
-            System.out.println(Arrays.toString(combination));
+            System.out.println("(Combinaison secrète : " + Utils.byteArrayToStringBuilder(combination) + ")");
         }
+        return combination;
     }
 
     // Création d'une proposition.
-    public static byte[] proposition(boolean isHuman){
-
-        for (int i = 0; i < getCombinationLength(); i++) {
-            if (isHuman) {
-                proposition[i] = sc.nextByte();
-
-            } else {
-                proposition[i] = randomNumber(1, 9);
+    byte[] propositionArrayFiller(boolean isHuman){
+        if (isHuman) {
+            String input = sc.nextLine();
+            char[] ch = new char[getCombinationLength()];
+            for (int i = 0; i < getCombinationLength(); i++) {
+                ch[i] = input.charAt(i);
+                proposition = ch
             }
+            System.out.println(Arrays.toString(ch));
         }
+        else
+            for (int i = 0; i < getCombinationLength(); i++) {
+                Utils.minMaxValue(i, getSecretHuman(), getProposition());
+                proposition[i] = Utils.randomNumber(Utils.getMin(), Utils.getMax());
+            }
         return proposition;
     }
 
     // Comparaison de la proposition avec la combinaison.
-    public static String compare(byte[] combination) {
-        String compareResult = null;
-        for (int i = 0; i < combination.length; i++) {
+    protected String[] compareArrays(byte[] combination) {
+        String [] compareResult = new String[getCombinationLength()];
+        for (int i = 0; i < getCombinationLength(); i++) {
 
             if (combination[i] > proposition[i]) {
-               compareResult = "+";
+               compareResult[i] = "+";
 
             } else if (combination[i] < proposition[i]) {
-                compareResult = "-";
+                compareResult[i] = "-";
 
             } else {
-                compareResult = "=";
+                compareResult[i] = "=";
             }
         }
         return compareResult;
     }
 
-    // Chiffre aléatoire.
-    public static byte randomNumber(int min, int max) {
-
-        Random rand = new Random();
-        byte randomNumber = (byte) (rand.nextInt(max - min + 1) + min);
-
-        return randomNumber;
-    }
 }
