@@ -1,5 +1,6 @@
 package com.ocr.florian;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -9,95 +10,94 @@ public abstract class AbstractGame{
 
     private byte[] secretComputer = new byte[getCombinationLength()];
     private byte[] secretHuman = new byte[getCombinationLength()];
-    private byte[] proposition = new byte[getCombinationLength()];
+    private static byte[] proposition = new byte[getCombinationLength()];
+    private byte min = 1;
+    private byte max = 9;
 
     // getters properties.
-
-    public static int getCombinationLength() {
+    protected static int getCombinationLength() {
         return 4;
     }
 
-    public int getMaxTries() {
+    protected int getMaxTries() {
         return 5;
     }
 
-    public boolean isDeveloperMode() {
-        boolean developerMode = true;
+    protected boolean isDeveloperMode() {
         return true;
     }
 
     // Getters and Setters.
-
-
-    public byte[] getSecretComputer() {
+    protected byte[] getSecretComputer() {
         return secretComputer;
     }
 
-    public void setSecretComputer(byte[] secretComputer) {
+    protected void setSecretComputer(byte[] secretComputer) {
         this.secretComputer = secretComputer;
     }
 
-    public byte[] getSecretHuman() {
+    protected byte[] getSecretHuman() {
         return secretHuman;
     }
 
-    public void setSecretHuman(byte[] secretHuman) {
+    protected void setSecretHuman(byte[] secretHuman) {
         this.secretHuman = secretHuman;
     }
 
-    public byte[] getProposition() {
+    protected byte[] getProposition() {
         return proposition;
     }
 
-
-    // Méthode abstraite start.
-    public void start() throws InterruptedException {
+    protected void setProposition(byte[] proposition) {
+        this.proposition = proposition;
     }
 
-    // Tableau pour la combinaison.
-    byte [] combinationArrayFiller(int min, int max) {
+    protected byte getMin() {
+        return min;
+    }
 
-       byte [] combination = new byte[getCombinationLength()];
+    protected byte getMax() {
+        return max;
+    }
+
+    // Méthode abstraite start.
+    abstract void start() throws InterruptedException, UnsupportedEncodingException;
+
+    // Tableau pour la combinaison.
+    protected byte[] generateComputerArray(boolean isProposition) {
+        byte[] computerArray = new byte[getCombinationLength()];
 
         for (int i = 0; i < getCombinationLength(); i++) {
-            combination[i] = Utils.randomNumber(min, max);
+            if (isProposition){
+                minMaxValue(i,secretHuman);
+            }
+            computerArray[i] = Utils.randomNumber(getMin(), getMax());
         }
-        if (isDeveloperMode()) {
-            System.out.println("(Combinaison secrète : " + Utils.byteArrayToStringBuilder(combination) + ")");
-        }
-        return combination;
+        return computerArray;
     }
 
     // Création d'une proposition.
-    byte[] propositionArrayFiller(boolean isHuman){
-        if (isHuman) {
-            String input = sc.nextLine();
-            char[] ch = new char[getCombinationLength()];
-            for (int i = 0; i < getCombinationLength(); i++) {
-                ch[i] = input.charAt(i);
-                proposition = ch
-            }
-            System.out.println(Arrays.toString(ch));
+    protected static void inputHumanArray(){
+        int gapAsciiValueToFirstDigit = 48;
+        String input = Utils.catchException(sc.nextLine());
+
+        for (int i = 0; i < getCombinationLength(); i++) {
+            char a = input.charAt(i);
+            byte b = (byte) a;
+            byte c = (byte) (b - gapAsciiValueToFirstDigit);
+            proposition[i] = c;
         }
-        else
-            for (int i = 0; i < getCombinationLength(); i++) {
-                Utils.minMaxValue(i, getSecretHuman(), getProposition());
-                proposition[i] = Utils.randomNumber(Utils.getMin(), Utils.getMax());
-            }
-        return proposition;
     }
 
     // Comparaison de la proposition avec la combinaison.
-    protected String[] compareArrays(byte[] combination) {
-        String [] compareResult = new String[getCombinationLength()];
-        for (int i = 0; i < getCombinationLength(); i++) {
+    protected static String[] compareArrays(byte[] combination,byte[] proposition) {
+        String[] compareResult = new String[getCombinationLength()];
 
+        for (int i = 0; i < getCombinationLength(); i++) {
             if (combination[i] > proposition[i]) {
                compareResult[i] = "+";
-
             } else if (combination[i] < proposition[i]) {
                 compareResult[i] = "-";
-
             } else {
                 compareResult[i] = "=";
             }
@@ -105,4 +105,44 @@ public abstract class AbstractGame{
         return compareResult;
     }
 
+    // tableau pour borner les propositions valide suivant la comparaison.
+    protected void minMaxValue(int i, byte[] combination) {
+
+            if (proposition[i] < combination[i]) {
+                min = (byte) (proposition[i] + 1);
+                max = 9;
+            } else if (proposition[i] > combination[i]) {
+                min = 1;
+                max = (byte) (proposition[i] - 1);
+            } else if (proposition[i] == combination[i]) {
+                min = proposition[i];
+                max = proposition[i];
+        }
+    }
+
+    protected static void introductionString(String mod) throws InterruptedException {
+        System.out.println("Mode sélectionné : "+ mod +"\n");
+        Thread.sleep(1000);
+        System.out.println("Définissez une combinaison de " + getCombinationLength() + " chiffres aléatoirement\n");
+        Thread.sleep(1000);
+        System.out.println("Jouez!");
+    }
+
+    protected void GameString(byte[] secret, String character){
+        if (isDeveloperMode()) {
+            System.out.println("(Combinaison secrète : " + Utils.byteArrayToStringBuilder(secret) + ")");
+        }
+        System.out.print("Proposition : " + Utils.byteArrayToStringBuilder(getProposition()));
+        System.out.println(" -> Réponse : "+ Utils.stringArrayToStringBuilder(compareArrays(secret,proposition)));
+
+        if (Arrays.equals(secret, getProposition())) {
+            System.out.println("\n\n"+character + " gagné!\n\n");
+            Escape_Game_App.menu();
+        }
+    }
+
+    protected void EndGameString(String character){
+        System.out.println("\n\n"+ character + " perdu!\n\n");
+        Escape_Game_App.menu();
+    }
 }
