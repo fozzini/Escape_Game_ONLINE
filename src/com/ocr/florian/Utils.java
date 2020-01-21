@@ -3,7 +3,6 @@ package com.ocr.florian;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
-
 import static java.lang.Integer.parseInt;
 
 public class Utils {
@@ -59,11 +58,11 @@ public class Utils {
         }
         catch (NumberFormatException e) {
             System.err.println("Saisir une valeur valide");
-            AbstractGame.inputHumanArray();
+            AbstractGame.inputHuman();
         }
         if (input.length() < AbstractGame.getCombinationLength() || input.length() > AbstractGame.getCombinationLength()) {
             System.err.println("Saisir un nombre de " + AbstractGame.getCombinationLength() + " chiffres. ");
-            AbstractGame.inputHumanArray();
+            AbstractGame.inputHuman();
         }
         return input;
     }

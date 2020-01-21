@@ -24,13 +24,13 @@ public class Escape_Game_App {
 		switch (playerChoice) {
 
 			case 1:
-				startGame(new ChallengerMod());
+				startGame(new ChallengerMode());
 				break;
 			case 2:
-				startGame(new DefenderMod());
+				startGame(new DefenderMode());
 				break;
 			case 3:
-				startGame(new DuelMod());
+				startGame(new DuelMode());
 				break;
 			case 4:
 				System.out.println("Vous quittez le jeu");
