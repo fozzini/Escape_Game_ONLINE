@@ -1,10 +1,12 @@
 package com.ocr.florian;
 
+import java.io.UnsupportedEncodingException;
+
 public class DefenderMode extends AbstractGame {
 
     // Mod defender.
     @Override
-    protected void start() throws InterruptedException {
+    protected void start() throws InterruptedException, UnsupportedEncodingException {
         String mode = "Defenseur";
         String character = "L'ordinateur à";
         displayIntroMessage(mode);
@@ -14,7 +16,7 @@ public class DefenderMode extends AbstractGame {
             Thread.sleep(2000);
             checkProposition(getSecretHuman(), generateComputer(),false, character);
         }
-        endGame(character);
+        endGame(character," perdu!");
     }
 }
 

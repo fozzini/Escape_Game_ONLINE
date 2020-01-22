@@ -1,10 +1,12 @@
 package com.ocr.florian;
 
+import java.io.UnsupportedEncodingException;
+
 public class DuelMode extends AbstractGame {
 
     // Mod duel.
     @Override
-    protected void start() throws InterruptedException{
+    protected void start() throws InterruptedException, UnsupportedEncodingException {
         String mode = "Duel";
         String computer = "L'ordinateur à";
         String human = "Vous avez";
@@ -20,7 +22,7 @@ public class DuelMode extends AbstractGame {
             System.out.println("vous");
             checkProposition(getSecretComputer(), inputHuman(),true, human);
         }
-        endGame(common);
+        endGame(common," perdu!");
     }
 }
 

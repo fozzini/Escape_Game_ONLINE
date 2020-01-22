@@ -20,7 +20,7 @@ public class Escape_Game_App {
 				"4- Quitter", 1, 4);
 	}
 
-	private static void gameModSelector(int playerChoice) throws InterruptedException, UnsupportedEncodingException {
+	public static void gameModSelector(int playerChoice) throws InterruptedException, UnsupportedEncodingException {
 		switch (playerChoice) {
 
 			case 1:
@@ -34,6 +34,7 @@ public class Escape_Game_App {
 				break;
 			case 4:
 				System.out.println("Vous quittez le jeu");
+				System.exit(0);
 				break;
 		}
 	}

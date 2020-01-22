@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import static com.ocr.florian.Escape_Game_App.menu;
+
 public abstract class AbstractGame{
 
     private static Scanner sc = new Scanner(System.in);
@@ -100,6 +102,7 @@ public abstract class AbstractGame{
 
     protected void displayIntroMessage(String mode) throws InterruptedException {
         for (int i = 0; i < getCombinationLength(); i++) {
+            min[i] = 0;
             max[i] = 9;
         }
         System.out.println("Mode sélectionné : "+ mode +"\n");
@@ -109,7 +112,7 @@ public abstract class AbstractGame{
         System.out.println("Jouez!");
     }
 
-    protected void checkProposition(byte[] secret, byte[] proposition, boolean isHuman, String character){
+    protected void checkProposition(byte[] secret, byte[] proposition, boolean isHuman, String character) throws UnsupportedEncodingException, InterruptedException {
         if (isDeveloperMode()) {
             System.out.println("(Combinaison secrète : " + Utils.byteArrayToStringBuilder(secret) + ")");
         }
@@ -117,13 +120,12 @@ public abstract class AbstractGame{
         System.out.println(" -> Réponse : "+ Utils.stringArrayToStringBuilder(compareCombination(secret, proposition, isHuman)));
 
         if (Arrays.equals(secret, proposition)) {
-            System.out.println("\n\n"+character + " gagné!\n\n");
-            Escape_Game_App.menu();
+            endGame(character," gagné!");
         }
     }
 
-    protected void endGame(String character){
-        System.out.println("\n\n"+ character + " perdu!\n\n");
-        Escape_Game_App.menu();
+    protected void endGame(String character, String loseOrWin) throws UnsupportedEncodingException, InterruptedException {
+        System.out.println("\n\n" + character + loseOrWin + "\n\n");
+        Escape_Game_App.gameModSelector(menu());
     }
 }
