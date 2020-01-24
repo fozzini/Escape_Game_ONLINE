@@ -12,8 +12,8 @@ public abstract class AbstractGame{
 
     private byte[] secretComputer = new byte[getCombinationLength()];
     private byte[] secretHuman = new byte[getCombinationLength()];
-    private byte [] min = new byte[getCombinationLength()];
-    private byte [] max = new byte[getCombinationLength()];
+    private byte[] min = new byte[getCombinationLength()];
+    private byte[] max = new byte[getCombinationLength()];
 
     // getters properties.
     protected static int getCombinationLength() {
