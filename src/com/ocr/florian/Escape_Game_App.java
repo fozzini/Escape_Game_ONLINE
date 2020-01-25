@@ -1,14 +1,13 @@
 package com.ocr.florian;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Scanner;
 
 public class Escape_Game_App {
 
-	private static Scanner sc = new Scanner(System.in);
-
 	public static void main(String[] args) throws InterruptedException, UnsupportedEncodingException {
-		gameModSelector(menu());
+		while (true) {
+			gameModSelector(menu());
+		}
 	}
 
 	public static int menu() {

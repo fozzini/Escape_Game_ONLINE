@@ -1,19 +1,18 @@
 package com.ocr.florian;
 
-import java.io.UnsupportedEncodingException;
-
 public class ChallengerMode extends AbstractGame {
 
     // Mod challenger.
     @Override
-    protected void start() throws InterruptedException, UnsupportedEncodingException {
+    protected void start() throws InterruptedException {
         String mode = "Challenger";
         String character = "Vous avez";
         displayIntroMessage(mode);
         setSecretComputer(generateComputer());
+        isDeveloper(getSecretComputer());
 
         for (int i = 0; i < getMaxTries(); i++) {
-            checkProposition(getSecretComputer(), inputHuman(), true, character);
+            checkProposition(getSecretComputer(), inputHuman(Utils.catchException()),false, character);
         }
         endGame(character," perdu!");
     }

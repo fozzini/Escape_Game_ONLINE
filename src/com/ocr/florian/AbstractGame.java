@@ -1,14 +1,8 @@
 package com.ocr.florian;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.Scanner;
-
-import static com.ocr.florian.Escape_Game_App.menu;
 
 public abstract class AbstractGame{
-
-    private static Scanner sc = new Scanner(System.in);
 
     private byte[] secretComputer = new byte[getCombinationLength()];
     private byte[] secretHuman = new byte[getCombinationLength()];
@@ -60,42 +54,46 @@ public abstract class AbstractGame{
     }
 
     // Création d'une proposition.
-    protected static byte[] inputHuman(){
+    protected static byte[] inputHuman(String input) {
         byte[] proposition = new byte[getCombinationLength()];
         char firstDigit = '0';
-        String input = Utils.catchException(sc.nextLine());
 
-        for (int i = 0; i < getCombinationLength(); i++) {
+        for (byte i = 0; i < getCombinationLength(); i++) {
             char a = input.charAt(i);
-            byte b = (byte) a;
-            byte c = (byte) (b -firstDigit );
-            proposition[i] = c;
+            byte b = (byte) (a - firstDigit);
+            proposition[i] = b;
         }
         return proposition;
     }
 
     // Comparaison de la proposition avec la combinaison.
-    protected  String[] compareCombination(byte[] combination, byte[] proposition, boolean isHuman) {
-        String[] compareResult = new String[getCombinationLength()];
+    protected StringBuffer compareCombination(byte[] combination, byte[] proposition, boolean isComputer, String character ) {
+        StringBuffer compareResult = new StringBuffer();
+        boolean isWin= false;
+        int cmpt = 0;
 
         for (int i = 0; i < getCombinationLength(); i++) {
             if (combination[i] > proposition[i]) {
-               compareResult[i] = "+";
-               if (!isHuman){
+               compareResult.append("+");
+               if (isComputer){
                    min[i] = (byte) (proposition[i] + 1);
                    max[i] = 9;}
             } else if (combination[i] < proposition[i]) {
-                compareResult[i] = "-";
-                if (!isHuman){
+                compareResult.append("-");
+                if (isComputer){
                     min[i] = 1;
                     max[i] = (byte) (proposition[i] - 1);}
             } else {
-                compareResult[i] = "=";
-                if (!isHuman){
+                compareResult.append("=");
+                cmpt++;
+                if (isComputer){
                     min[i] = proposition[i];
                     max[i] = proposition[i];
                 }
             }
+        }
+        if (getCombinationLength() == cmpt ){
+            isWin = true;
         }
         return compareResult;
     }
@@ -107,25 +105,21 @@ public abstract class AbstractGame{
         }
         System.out.println("Mode sélectionné : "+ mode +"\n");
         Thread.sleep(1000);
-        System.out.println("Définissez une combinaison de " + getCombinationLength() + " chiffres aléatoirement\n");
-        Thread.sleep(1000);
-        System.out.println("Jouez!");
+        System.out.println("Définissez une combinaison de " + getCombinationLength() + " chiffres\n");
     }
 
-    protected void checkProposition(byte[] secret, byte[] proposition, boolean isHuman, String character) throws UnsupportedEncodingException, InterruptedException {
-        if (isDeveloperMode()) {
-            System.out.println("(Combinaison secrète : " + Utils.byteArrayToStringBuilder(secret) + ")");
-        }
-        System.out.print("Proposition : " + Utils.byteArrayToStringBuilder(proposition));
-        System.out.println(" -> Réponse : "+ Utils.stringArrayToStringBuilder(compareCombination(secret, proposition, isHuman)));
-
-        if (Arrays.equals(secret, proposition)) {
-            endGame(character," gagné!");
-        }
+    protected void checkProposition(byte[] secret, byte[] proposition, boolean isComputer, String character){
+        System.out.print("Proposition : " + Utils.byteArrayToString(proposition));
+        System.out.println(" -> Réponse : "+ compareCombination(secret, proposition, isComputer, character));
     }
 
-    protected void endGame(String character, String loseOrWin) throws UnsupportedEncodingException, InterruptedException {
+    protected void endGame(String character, String loseOrWin){
         System.out.println("\n\n" + character + loseOrWin + "\n\n");
-        Escape_Game_App.gameModSelector(menu());
     }
+    protected void isDeveloper(byte[] secret){
+        if (isDeveloperMode()) {
+            System.out.println("(Combinaison secrète : " + Utils.byteArrayToString(secret) + ")");
+        }
+    }
+
 }

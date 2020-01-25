@@ -3,7 +3,9 @@ package com.ocr.florian;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
-import static java.lang.Integer.parseInt;
+
+import static java.lang.Integer.*;
+
 
 public class Utils {
 
@@ -24,8 +26,10 @@ public class Utils {
             try {
                 value = sc.nextByte();
                 valueIsGood = true;
-            } catch (InputMismatchException e) {
+            }
+            catch (InputMismatchException e) {
                 System.err.println("Saisir une valeur valide");
+                sc.next();
                 valueIsGood = false;
             }
             if (value < minValue || (value > maxValue)) {
@@ -36,34 +40,33 @@ public class Utils {
         return value;
     }
 
-    public static String byteArrayToStringBuilder(byte[] monTableau) {
+    public static String byteArrayToString(byte[] array) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < AbstractGame.getCombinationLength(); i++) {
-            sb.append(monTableau[i]);
+            sb.append(array[i]);
         }
         return sb.toString();
     }
 
-    public static String stringArrayToStringBuilder(String[] monTableau) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < AbstractGame.getCombinationLength(); i++) {
-            sb.append(monTableau[i]);
-        }
-        return sb.toString();
-    }
-
-    public static String catchException(String input){
-        try {
-            parseInt(input);
-        }
-        catch (NumberFormatException e) {
-            System.err.println("Saisir une valeur valide");
-            AbstractGame.inputHuman();
-        }
-        if (input.length() < AbstractGame.getCombinationLength() || input.length() > AbstractGame.getCombinationLength()) {
-            System.err.println("Saisir un nombre de " + AbstractGame.getCombinationLength() + " chiffres. ");
-            AbstractGame.inputHuman();
-        }
+    public static String catchException(){
+        String input = sc.next();
+        boolean valueIsGood;
+        do{
+            try {
+                parseInt(input);
+                valueIsGood = true;
+            }
+            catch (NumberFormatException e) {
+                System.err.println("Saisir une valeur valide");
+                input = sc.next();
+                valueIsGood = false;
+            }
+            if (input.length() != AbstractGame.getCombinationLength()) {
+                System.err.println("Saisir un nombre de " + AbstractGame.getCombinationLength() + " chiffres. ");
+                input = sc.next();
+                valueIsGood = false;
+            }
+        }while(!valueIsGood);
         return input;
     }
 }

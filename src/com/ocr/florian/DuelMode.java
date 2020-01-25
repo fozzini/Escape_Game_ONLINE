@@ -6,7 +6,7 @@ public class DuelMode extends AbstractGame {
 
     // Mod duel.
     @Override
-    protected void start() throws InterruptedException, UnsupportedEncodingException {
+    protected void start() throws InterruptedException {
         String mode = "Duel";
         String computer = "L'ordinateur à";
         String human = "Vous avez";
@@ -14,13 +14,15 @@ public class DuelMode extends AbstractGame {
         displayIntroMessage(mode);
         setSecretComputer(generateComputer());
         setSecretHuman(generateComputer());
+        isDeveloper(getSecretComputer());
+        isDeveloper(getSecretHuman());
 
         for (int i = 0; i < getMaxTries(); i++){
             System.out.println("L'ordinateur");
             Thread.sleep(2000);
-            checkProposition(getSecretHuman(), generateComputer(),false, computer);
+            checkProposition(getSecretHuman(), generateComputer(),true, computer);
             System.out.println("vous");
-            checkProposition(getSecretComputer(), inputHuman(),true, human);
+            checkProposition(getSecretComputer(), inputHuman(Utils.catchException()),false, human);
         }
         endGame(common," perdu!");
     }
