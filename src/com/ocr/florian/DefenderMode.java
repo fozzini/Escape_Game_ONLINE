@@ -1,7 +1,5 @@
 package com.ocr.florian;
 
-import java.io.UnsupportedEncodingException;
-
 public class DefenderMode extends AbstractGame {
 
     // Mod defender.

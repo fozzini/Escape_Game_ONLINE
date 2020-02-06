@@ -1,7 +1,5 @@
 package com.ocr.florian;
 
-import java.io.UnsupportedEncodingException;
-
 public class DuelMode extends AbstractGame {
 
     // Mod duel.
@@ -13,7 +11,7 @@ public class DuelMode extends AbstractGame {
         String common = "Vous et l'ordinateur avez";
         displayIntroMessage(mode);
         setSecretComputer(generateComputer());
-        setSecretHuman(generateComputer());
+        setSecretHuman(inputHuman(Utils.catchException()));
         isDeveloper(getSecretComputer());
         isDeveloper(getSecretHuman());
 
