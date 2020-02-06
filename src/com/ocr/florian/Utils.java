@@ -4,9 +4,6 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-import static java.lang.Integer.*;
-
-
 public class Utils {
 
     private static Scanner sc = new Scanner(System.in);
@@ -48,26 +45,5 @@ public class Utils {
         return sb.toString();
     }
 
-    public static String catchException(){
-        String input = sc.next();
-        boolean valueIsGood;
-        do{
-            try {
-                parseInt(input);
-                valueIsGood = true;
-            }
-            catch (NumberFormatException e) {
-                System.err.println("Saisir une valeur valide");
-                input = sc.next();
-                valueIsGood = false;
-            }
-            if (input.length() != AbstractGame.getCombinationLength()) {
-                System.err.println("Saisir un nombre de " + AbstractGame.getCombinationLength() + " chiffres. ");
-                input = sc.next();
-                valueIsGood = false;
-            }
-        }while(!valueIsGood);
-        return input;
-    }
 }
 

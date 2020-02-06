@@ -6,23 +6,29 @@ public class DuelMode extends AbstractGame {
     @Override
     protected void start() throws InterruptedException {
         String mode = "Duel";
-        String computer = "L'ordinateur à";
-        String human = "Vous avez";
-        String common = "Vous et l'ordinateur avez";
+        String character = "Vous et l'ordinateur avez";
         displayIntroMessage(mode);
         setSecretComputer(generateComputer());
-        setSecretHuman(inputHuman(Utils.catchException()));
+        setSecretHuman(userEntry());
         isDeveloper(getSecretComputer());
         isDeveloper(getSecretHuman());
 
-        for (int i = 0; i < getMaxTries(); i++){
+        for (int i = 0; i < getMaxTries() ; i++){
             System.out.println("L'ordinateur");
             Thread.sleep(2000);
-            checkProposition(getSecretHuman(), generateComputer(),true, computer);
+            checkProposition(getSecretHuman(), generateComputer(),true);
+            if (getIsWon()) {
+                character = "L'ordinateur à";
+                break;
+            }
             System.out.println("vous");
-            checkProposition(getSecretComputer(), inputHuman(Utils.catchException()),false, human);
+            checkProposition(getSecretComputer(), userEntry(),false);
+            if (getIsWon()) {
+                character = " Vous avez";
+                break;
+            }
         }
-        endGame(common," perdu!");
+        endGame(character);
     }
 }
 

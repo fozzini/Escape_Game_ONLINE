@@ -11,9 +11,12 @@ public class ChallengerMode extends AbstractGame {
         setSecretComputer(generateComputer());
         isDeveloper(getSecretComputer());
 
-        for (int i = 0; i < getMaxTries(); i++) {
-            checkProposition(getSecretComputer(), inputHuman(Utils.catchException()),false, character);
+        for (int i = 0; i < getMaxTries() ; i++) {
+            checkProposition(getSecretComputer(), userEntry(),false);
+            if (getIsWon()) {
+                break;
+            }
         }
-        endGame(character," perdu!");
+        endGame(character);
     }
 }
