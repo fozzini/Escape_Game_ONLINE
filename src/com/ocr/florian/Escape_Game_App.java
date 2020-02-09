@@ -1,12 +1,15 @@
 package com.ocr.florian;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class Escape_Game_App {
 
-	public static void main(String[] args) throws InterruptedException, UnsupportedEncodingException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		while (true) {
+			ConfigProperties.loadProperties();
 			gameModSelector(menu());
+
 		}
 	}
 

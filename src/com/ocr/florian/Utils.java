@@ -39,7 +39,7 @@ public class Utils {
 
     public static String byteArrayToString(byte[] array) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < AbstractGame.getCombinationLength(); i++) {
+        for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             sb.append(array[i]);
         }
         return sb.toString();

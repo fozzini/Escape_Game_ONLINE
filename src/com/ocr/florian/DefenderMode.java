@@ -11,7 +11,7 @@ public class DefenderMode extends AbstractGame {
         setSecretHuman(userEntry());
         isDeveloper(getSecretHuman());
 
-        for (int i = 0; i < getMaxTries() ; i++) {
+        for (int i = 0; i < ConfigProperties.getMaxTries() ; i++) {
             Thread.sleep(2000);
             checkProposition(getSecretHuman(), generateComputer(),true);
             if (getIsWon()) {

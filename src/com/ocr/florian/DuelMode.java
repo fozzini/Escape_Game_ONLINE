@@ -13,7 +13,7 @@ public class DuelMode extends AbstractGame {
         isDeveloper(getSecretComputer());
         isDeveloper(getSecretHuman());
 
-        for (int i = 0; i < getMaxTries() ; i++){
+        for (int i = 0; i < ConfigProperties.getMaxTries() ; i++){
             System.out.println("L'ordinateur");
             Thread.sleep(2000);
             checkProposition(getSecretHuman(), generateComputer(),true);

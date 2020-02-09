@@ -7,24 +7,11 @@ public abstract class AbstractGame{
 
     private static Scanner sc = new Scanner(System.in);
 
-    private byte[] secretComputer = new byte[getCombinationLength()];
-    private byte[] secretHuman = new byte[getCombinationLength()];
-    private byte[] min = new byte[getCombinationLength()];
-    private byte[] max = new byte[getCombinationLength()];
+    private byte[] secretComputer = new byte[ConfigProperties.getCombinationLength()];
+    private byte[] secretHuman = new byte[ConfigProperties.getCombinationLength()];
+    private byte[] min = new byte[ConfigProperties.getCombinationLength()];
+    private byte[] max = new byte[ConfigProperties.getCombinationLength()];
     private boolean isWon = false;
-
-    // getters properties.
-    protected static int getCombinationLength() {
-        return 4;
-    }
-
-    protected int getMaxTries() {
-        return 5;
-    }
-
-    protected boolean isDeveloperMode() {
-        return true;
-    }
 
     // Getters and Setters.
     protected byte[] getSecretComputer() {
@@ -45,7 +32,7 @@ public abstract class AbstractGame{
 
     // Création d'une proposition.
     protected static byte[] userEntry() {
-        byte[] proposition = new byte[getCombinationLength()];
+        byte[] proposition = new byte[ConfigProperties.getCombinationLength()];
         String input = sc.next();
         boolean valueIsGood;
 
@@ -59,14 +46,14 @@ public abstract class AbstractGame{
                 input = sc.next();
                 valueIsGood = false;
             }
-            if (input.length() != AbstractGame.getCombinationLength()) {
-                System.err.println("Saisir un nombre de " + AbstractGame.getCombinationLength() + " chiffres. ");
+            if (input.length() != ConfigProperties.getCombinationLength()) {
+                System.err.println("Saisir un nombre de " + ConfigProperties.getCombinationLength() + " chiffres. ");
                 input = sc.next();
                 valueIsGood = false;
             }
         }while(!valueIsGood);
 
-        for (byte i = 0; i < getCombinationLength(); i++) {
+        for (byte i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             char a = input.charAt(i);
             byte b = (byte) (a - '0');
             proposition[i] = b;
@@ -74,21 +61,21 @@ public abstract class AbstractGame{
         return proposition;
     }
 
+    protected boolean getIsWon() {
+        return isWon;
+    }
+
     // Méthode abstraite start.
     protected abstract void start() throws InterruptedException, UnsupportedEncodingException;
 
     // Tableau pour la combinaison.
     protected byte[] generateComputer() {
-        byte[] computer = new byte[getCombinationLength()];
+        byte[] computer = new byte[ConfigProperties.getCombinationLength()];
 
-        for (int i = 0; i < getCombinationLength(); i++) {
+        for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             computer[i] = Utils.randomNumber(min[i], max[i]);
         }
         return computer;
-    }
-
-    protected boolean getIsWon() {
-        return isWon;
     }
 
     // Comparaison de la proposition avec la combinaison.
@@ -96,12 +83,12 @@ public abstract class AbstractGame{
         String resultsComparison = "";
         int count = 0;
 
-        for (int i = 0; i < getCombinationLength(); i++) {
+        for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             if (combination[i] > proposition[i]) {
-               resultsComparison = resultsComparison + "+";
-               if (isComputer){
-                   min[i] = (byte) (proposition[i] + 1);
-                   max[i] = 9;}
+                resultsComparison = resultsComparison + "+";
+                if (isComputer){
+                    min[i] = (byte) (proposition[i] + 1);
+                    max[i] = 9;}
             } else if (combination[i] < proposition[i]) {
                 resultsComparison = resultsComparison + "-";
                 if (isComputer){
@@ -116,20 +103,20 @@ public abstract class AbstractGame{
                 }
             }
         }
-        if (getCombinationLength() == count ){
+        if (ConfigProperties.getCombinationLength() == count ){
             isWon = true;
         }
         return resultsComparison;
     }
 
     protected void displayIntroMessage(String mode) throws InterruptedException {
-        for (int i = 0; i < getCombinationLength(); i++) {
+        for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             min[i] = 0;
             max[i] = 9;
         }
         System.out.println("Mode sélectionné : "+ mode +"\n");
         Thread.sleep(1000);
-        System.out.println("Définissez une combinaison de " + getCombinationLength() + " chiffres\n");
+        System.out.println("Définissez une combinaison de " + ConfigProperties.getCombinationLength() + " chiffres\n");
     }
 
     protected void checkProposition(byte[] secret, byte[] proposition, boolean isComputer){
@@ -148,7 +135,7 @@ public abstract class AbstractGame{
         System.out.println("\n\n" + character + loseOrWin + "\n\n");
     }
     protected void isDeveloper(byte[] secret){
-        if (isDeveloperMode()) {
+        if (ConfigProperties.isDeveloperMode()) {
             System.out.println("(Combinaison secrète : " + Utils.byteArrayToString(secret) + ")");
         }
     }
