@@ -32,18 +32,13 @@ public class ConfigProperties{
             Properties propConfig = new Properties();
             propConfig.load(fis);
 
-            //Get the properties.
-            
-            String combiLength = null;
-            combiLength = propConfig.getProperty(combiLength);
-            String mxTries = null;
-            mxTries = propConfig.getProperty(mxTries);
-            String devMode = null;
-            devMode = propConfig.getProperty(devMode);
+            String combiLength = propConfig.getProperty("combiLength");
+            String mxTries = propConfig.getProperty("mxTries");
+            String devMode = propConfig.getProperty("devMode");
+
             combinationLength = Integer.parseInt(combiLength);
             maxTries = Integer.parseInt(mxTries);
             developerMode = Boolean.parseBoolean(devMode);
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
