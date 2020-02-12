@@ -1,6 +1,6 @@
 package com.ocr.florian;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class AbstractGame{
@@ -11,7 +11,7 @@ public abstract class AbstractGame{
     private byte[] secretHuman = new byte[ConfigProperties.getCombinationLength()];
     private byte[] min = new byte[ConfigProperties.getCombinationLength()];
     private byte[] max = new byte[ConfigProperties.getCombinationLength()];
-    private boolean isWon = false;
+    private boolean won = false;
 
     // Getters and Setters.
     protected byte[] getSecretComputer() {
@@ -20,6 +20,9 @@ public abstract class AbstractGame{
 
     protected void setSecretComputer(byte[] secretComputer) {
         this.secretComputer = secretComputer;
+        if (ConfigProperties.isDeveloperMode()) {
+            System.out.println("(Combinaison secrète : " + Utils.byteArrayToString(secretComputer) + ")");
+        }
     }
 
     protected byte[] getSecretHuman() {
@@ -30,8 +33,12 @@ public abstract class AbstractGame{
         this.secretHuman = secretHuman;
     }
 
+    protected boolean isWon() {
+        return won;
+    }
+
     // Création d'une proposition.
-    protected static byte[] userEntry() {
+    protected byte[] userEntry() {
         byte[] proposition = new byte[ConfigProperties.getCombinationLength()];
         String input = sc.next();
         boolean valueIsGood;
@@ -61,12 +68,8 @@ public abstract class AbstractGame{
         return proposition;
     }
 
-    protected boolean getIsWon() {
-        return isWon;
-    }
-
     // Méthode abstraite start.
-    protected abstract void start() throws InterruptedException, UnsupportedEncodingException;
+    protected abstract void start() throws InterruptedException, IOException;
 
     // Tableau pour la combinaison.
     protected byte[] generateComputer() {
@@ -81,63 +84,59 @@ public abstract class AbstractGame{
     // Comparaison de la proposition avec la combinaison.
     protected String combinationComparison(byte[] combination, byte[] proposition, boolean isComputer) {
         String resultsComparison = "";
-        int count = 0;
+        int countGoodDigits = 0;
 
         for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             if (combination[i] > proposition[i]) {
-                resultsComparison = resultsComparison + "+";
-                if (isComputer){
+                resultsComparison += "+";
+                if (isComputer) {
                     min[i] = (byte) (proposition[i] + 1);
                     max[i] = 9;}
             } else if (combination[i] < proposition[i]) {
-                resultsComparison = resultsComparison + "-";
-                if (isComputer){
+                resultsComparison += "-";
+                if (isComputer) {
                     min[i] = 1;
-                    max[i] = (byte) (proposition[i] - 1);}
+                    max[i] = (byte) (proposition[i] - 1);
+                }
             } else {
-                resultsComparison = resultsComparison + "=";
-                count++;
+                resultsComparison += "=";
+                countGoodDigits++;
                 if (isComputer){
                     min[i] = proposition[i];
                     max[i] = proposition[i];
                 }
             }
         }
-        if (ConfigProperties.getCombinationLength() == count ){
-            isWon = true;
+        if (ConfigProperties.getCombinationLength() == countGoodDigits) {
+            won = true;
         }
         return resultsComparison;
     }
 
-    protected void displayIntroMessage(String mode) throws InterruptedException {
+    protected void displayIntroMessage(String mode) throws InterruptedException, IOException {
         for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             min[i] = 0;
             max[i] = 9;
         }
+        ConfigProperties.loadProperties();
         System.out.println("Mode sélectionné : "+ mode +"\n");
         Thread.sleep(1000);
         System.out.println("Définissez une combinaison de " + ConfigProperties.getCombinationLength() + " chiffres\n");
     }
 
-    protected void checkProposition(byte[] secret, byte[] proposition, boolean isComputer){
+    protected void checkProposition(byte[] secret, byte[] proposition, boolean isComputer) {
         System.out.print("Proposition : " + Utils.byteArrayToString(proposition));
         System.out.println(" -> Réponse : "+ combinationComparison(secret, proposition, isComputer));
     }
 
-    protected void endGame(String character){
+    protected void endGame(String character) {
         String loseOrWin = "";
-        if (getIsWon()){
+        if (isWon()){
             loseOrWin = " gagné";
         }
-        else if (!getIsWon()){
+        else if (!isWon()){
             loseOrWin = " perdu!";
         }
         System.out.println("\n\n" + character + loseOrWin + "\n\n");
     }
-    protected void isDeveloper(byte[] secret){
-        if (ConfigProperties.isDeveloperMode()) {
-            System.out.println("(Combinaison secrète : " + Utils.byteArrayToString(secret) + ")");
-        }
-    }
-
 }

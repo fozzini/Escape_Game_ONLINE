@@ -1,15 +1,14 @@
 package com.ocr.florian;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+
 
 public class Escape_Game_App {
 
-	public static void main(String[] args) throws InterruptedException, IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		while (true) {
 			ConfigProperties.loadProperties();
 			gameModSelector(menu());
-
 		}
 	}
 
@@ -22,7 +21,7 @@ public class Escape_Game_App {
 				"4- Quitter", 1, 4);
 	}
 
-	public static void gameModSelector(int playerChoice) throws InterruptedException, UnsupportedEncodingException {
+	public static void gameModSelector(int playerChoice) throws InterruptedException, IOException {
 		switch (playerChoice) {
 
 			case 1:
@@ -41,7 +40,7 @@ public class Escape_Game_App {
 		}
 	}
 
-	private static void startGame(AbstractGame game) throws InterruptedException, UnsupportedEncodingException {
+	private static void startGame(AbstractGame game) throws InterruptedException, IOException {
 		game.start();
 	}
 }
