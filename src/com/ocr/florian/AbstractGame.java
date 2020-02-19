@@ -3,7 +3,7 @@ package com.ocr.florian;
 import java.io.IOException;
 import java.util.Scanner;
 
-public abstract class AbstractGame{
+public abstract class AbstractGame {
 
     private static Scanner sc = new Scanner(System.in);
 
