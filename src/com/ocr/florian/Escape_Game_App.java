@@ -1,12 +1,16 @@
 package com.ocr.florian;
 
+import org.apache.log4j.Logger;
 import java.io.IOException;
-
 
 public class Escape_Game_App {
 
-	public static void main(String[] args) throws IOException, InterruptedException {
+    private static Logger logger = Logger.getLogger(Escape_Game_App.class);
+
+    public static void main(String[] args) throws IOException, InterruptedException {
+		logger.info("Démarrage de l'application");
 		while (true) {
+            logger.info("Menu");
 			ConfigProperties.loadProperties();
 			gameModSelector(menu());
 		}
@@ -25,16 +29,20 @@ public class Escape_Game_App {
 		switch (playerChoice) {
 
 			case 1:
+				logger.info("ChallengerMode");
 				startGame(new ChallengerMode());
 				break;
 			case 2:
+				logger.info("DefenderMode");
 				startGame(new DefenderMode());
 				break;
 			case 3:
+				logger.info("DuelMode");
 				startGame(new DuelMode());
 				break;
 			case 4:
 				System.out.println("Vous quittez le jeu");
+				logger.info("Fermeture de l'application");
 				System.exit(0);
 				break;
 		}

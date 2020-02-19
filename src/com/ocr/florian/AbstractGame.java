@@ -1,11 +1,12 @@
 package com.ocr.florian;
-
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Scanner;
 
 public abstract class AbstractGame {
 
     private static Scanner sc = new Scanner(System.in);
+    private static Logger logger = Logger.getLogger(AbstractGame.class);
 
     private byte[] secretComputer = new byte[ConfigProperties.getCombinationLength()];
     private byte[] secretHuman = new byte[ConfigProperties.getCombinationLength()];
@@ -43,22 +44,24 @@ public abstract class AbstractGame {
         String input = sc.next();
         boolean valueIsGood;
 
-        do{
+        do {
             try {
                 Integer.parseInt(input);
                 valueIsGood = true;
             }
             catch (NumberFormatException e) {
                 System.err.println("Saisir une valeur valide");
+                logger.warn("mauvaise saisie clavier (la valeur saisie n'est pas un nombre)");
                 input = sc.next();
                 valueIsGood = false;
             }
             if (input.length() != ConfigProperties.getCombinationLength()) {
                 System.err.println("Saisir un nombre de " + ConfigProperties.getCombinationLength() + " chiffres. ");
+                logger.warn("mauvaise saisie clavier (la valeur saisie ne respecte pas la taille de la combinaison )");
                 input = sc.next();
                 valueIsGood = false;
             }
-        }while(!valueIsGood);
+        } while (!valueIsGood);
 
         for (byte i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             char a = input.charAt(i);
@@ -133,9 +136,11 @@ public abstract class AbstractGame {
         String loseOrWin = "";
         if (isWon()){
             loseOrWin = " gagné";
+            logger.info("partie gagné");
         }
         else if (!isWon()){
             loseOrWin = " perdu!";
+            logger.info("partie perdu");
         }
         System.out.println("\n\n" + character + loseOrWin + "\n\n");
     }

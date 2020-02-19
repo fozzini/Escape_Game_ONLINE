@@ -1,0 +1,9 @@
+2020-02-19 15:19:06,359 [main] INFO com.ocr.florian.Escape_Game_App  - Démarrage de l'application
+2020-02-19 15:19:06,361 [main] INFO com.ocr.florian.Escape_Game_App  - Menu
+2020-02-19 15:19:06,362 [main] ERROR com.ocr.florian.ConfigProperties  - erreur du fichier de configuration, chargement par défaut
+2020-02-19 15:19:19,919 [main] INFO com.ocr.florian.Escape_Game_App  - DefenderMode
+2020-02-19 15:19:19,935 [main] ERROR com.ocr.florian.ConfigProperties  - erreur du fichier de configuration, chargement par défaut
+2020-02-19 15:19:31,354 [main] INFO com.ocr.florian.AbstractGame  - partie gagné
+2020-02-19 15:19:31,385 [main] INFO com.ocr.florian.Escape_Game_App  - Menu
+2020-02-19 15:19:31,401 [main] ERROR com.ocr.florian.ConfigProperties  - erreur du fichier de configuration, chargement par défaut
+2020-02-19 15:21:36,867 [main] INFO com.ocr.florian.Escape_Game_App  - Fermeture de l'application

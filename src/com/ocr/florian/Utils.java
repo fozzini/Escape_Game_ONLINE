@@ -1,11 +1,12 @@
 package com.ocr.florian;
-
+import org.apache.log4j.Logger;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Utils {
 
+    private static Logger logger = Logger.getLogger(Utils.class);
     private static Scanner sc = new Scanner(System.in);
 
     // Chiffre aléatoire.
@@ -26,11 +27,13 @@ public class Utils {
             }
             catch (InputMismatchException e) {
                 System.err.println("Saisir une valeur valide");
+                logger.warn("Mauvaise saisie, aucun chiffre inséré");
                 sc.next();
                 valueIsGood = false;
             }
             if (value < minValue || (value > maxValue)) {
                 System.err.println("Saisir un chiffre entre " + minValue + " et " + maxValue);
+                logger.warn("Mauvaise saisie, la valeur ne respecte pas les choix proposés");
                 valueIsGood = false;
             }
         } while (!valueIsGood);

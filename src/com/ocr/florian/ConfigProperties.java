@@ -1,11 +1,14 @@
 package com.ocr.florian;
-
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigProperties {
+
+    private static Logger logger = Logger.getLogger(ConfigProperties.class);
+
     private static int combinationLength = 4;
     private static int maxTries = 5;
     private static boolean developerMode = false;
@@ -30,7 +33,6 @@ public class ConfigProperties {
         Properties propConfig = new Properties();
 
         try {
-
             propConfig.load(fis);
             String combiLength = propConfig.getProperty("combinationLength");
             String mxTries = propConfig.getProperty("maxTries");
@@ -48,7 +50,7 @@ public class ConfigProperties {
             }
 
         } catch (NumberFormatException e) {
-            
+            logger.error("Erreur du fichier de configuration, chargement par défaut");
         }
     }
 }
