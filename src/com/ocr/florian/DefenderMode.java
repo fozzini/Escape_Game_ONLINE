@@ -1,12 +1,10 @@
 package com.ocr.florian;
 
-import java.io.IOException;
-
 public class DefenderMode extends AbstractGame {
 
     // Mod defender.
     @Override
-    protected void start() throws InterruptedException, IOException {
+    protected void start() throws InterruptedException {
         String mode = "Defenseur";
         String character = "L'ordinateur à";
         displayIntroMessage(mode);

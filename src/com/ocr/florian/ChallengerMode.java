@@ -1,12 +1,10 @@
 package com.ocr.florian;
 
-import java.io.IOException;
-
 public class ChallengerMode extends AbstractGame {
 
     // Mod challenger.
     @Override
-    protected void start() throws InterruptedException, IOException {
+    protected void start() throws InterruptedException {
         String mode = "Challenger";
         String character = "Vous avez";
         displayIntroMessage(mode);

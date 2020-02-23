@@ -1,6 +1,7 @@
 package com.ocr.florian;
 import org.apache.log4j.Logger;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public abstract class AbstractGame {
@@ -68,6 +69,7 @@ public abstract class AbstractGame {
             byte b = (byte) (a - '0');
             proposition[i] = b;
         }
+        logger.debug("User entry est " + Arrays.toString(proposition));
         return proposition;
     }
 
@@ -81,6 +83,7 @@ public abstract class AbstractGame {
         for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             computer[i] = Utils.randomNumber(min[i], max[i]);
         }
+        logger.debug("Generate computer est " + Arrays.toString(computer));
         return computer;
     }
 
@@ -113,15 +116,15 @@ public abstract class AbstractGame {
         if (ConfigProperties.getCombinationLength() == countGoodDigits) {
             won = true;
         }
+        logger.debug("Résultat de la comparaison " + resultsComparison);
         return resultsComparison;
     }
 
-    protected void displayIntroMessage(String mode) throws InterruptedException, IOException {
+    protected void displayIntroMessage(String mode) throws InterruptedException {
         for (int i = 0; i < ConfigProperties.getCombinationLength(); i++) {
             min[i] = 0;
             max[i] = 9;
         }
-        ConfigProperties.loadProperties();
         System.out.println("Mode sélectionné : "+ mode +"\n");
         Thread.sleep(1000);
         System.out.println("Définissez une combinaison de " + ConfigProperties.getCombinationLength() + " chiffres\n");
