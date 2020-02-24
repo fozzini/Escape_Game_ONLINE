@@ -63,7 +63,6 @@ public class ConfigProperties {
 
         } catch (NumberFormatException e) {
             logger.error("Erreur du fichier de configuration, chargement par défaut");
-
         }
     }
 }
